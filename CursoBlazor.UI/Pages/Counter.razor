@@ -1,0 +1,58 @@
+﻿@page "/counter"
+@page "/counter/{Id:int}"
+@using CursoBlazor.Models
+@using CursoBlazor.UI.Interfaces
+@inject ICategoriaService CategoriaService
+@inject NavigationManager NavigationManager
+
+<PageTitle>Categorias</PageTitle>
+
+<h1>Agregar categoria</h1>
+
+<EditForm Model="@categoria" OnValidSubmit="SendCategoria">
+	<!-- Para mostrar los possibles errores en el formulario -->
+	<DataAnnotationsValidator />
+
+	<table>
+		<tr>
+			<td>
+				<label class="form-label">Nombre de la categoria</label>
+				<input type="text" @bind="categoria.Name" class="form-control">
+				<ValidationMessage For="(() => categoria.Name)"/>
+			</td>
+		</tr>
+		<tr>
+			<td>
+				<input type="submit" value="Guardar" class="btn btn-outline-primary btn-sm">
+				<a class="btn btn-danger btn-sm" href="/fetchdata" type="button">Cancelar</a>
+			</td>
+		</tr>
+	</table>
+</EditForm>
+
+@code {
+
+	[Parameter]
+	public int Id { get; set; }
+
+	protected async override Task OnInitializedAsync()
+	{
+		if (Id > 0)
+		{
+			categoria = await CategoriaService.GetCategoria(Id);
+		}
+	}
+
+	Categoria categoria = new Categoria();
+	public async Task SendCategoria()
+	{
+		await CategoriaService.SaveCategoria(categoria);
+
+		// Controla la url del navegador:
+		// Borra la url actual y se reemplaza por indicada
+		// sin realizar ninguna peticion
+		// NavigationManager.NavigateTo();
+
+		NavigationManager.NavigateTo("/fetchdata");
+	}
+}
