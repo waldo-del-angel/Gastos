@@ -9,26 +9,45 @@
 
 <h1>Agregar categoria</h1>
 
-<EditForm Model="@categoria" OnValidSubmit="SendCategoria">
-	<!-- Para mostrar los possibles errores en el formulario -->
-	<DataAnnotationsValidator />
+<!-- Modal -->
+<div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="staticBackdropLabel">Modal title</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+	  <EditForm Model="@categoria" OnValidSubmit="SendCategoria">
+		  <div class="modal-body">
+        
+			<!-- Para mostrar los possibles errores en el formulario -->
+			<DataAnnotationsValidator />
 
-	<table>
-		<tr>
-			<td>
-				<label class="form-label">Nombre de la categoria</label>
-				<input type="text" @bind="categoria.Name" class="form-control">
-				<ValidationMessage For="(() => categoria.Name)"/>
-			</td>
-		</tr>
-		<tr>
-			<td>
-				<input type="submit" value="Guardar" class="btn btn-outline-primary btn-sm">
-				<a class="btn btn-danger btn-sm" href="/fetchdata" type="button">Cancelar</a>
-			</td>
-		</tr>
-	</table>
-</EditForm>
+			<table>
+				<tr>
+					<td>
+						<label class="form-label">Nombre de la categoria</label>
+						<input type="text" @bind="categoria.Name" class="form-control">
+						<ValidationMessage For="(() => categoria.Name)"/>
+					</td>
+				</tr>
+				<tr>
+					<td>
+						<input type="submit" value="Guardar" class="btn btn-outline-primary btn-sm">
+						<a class="btn btn-danger btn-sm" href="/fetchdata" type="button">Cancelar</a>
+					</td>
+				</tr>
+			</table>
+		
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+        <button type="button" class="btn btn-primary">Understood</button>
+      </div>
+	  </EditForm>
+    </div>
+  </div>
+</div>
 
 @code {
 
