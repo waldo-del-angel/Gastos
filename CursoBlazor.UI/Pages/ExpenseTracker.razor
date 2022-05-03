@@ -1,0 +1,31 @@
+﻿@page "/expensetracker"
+@using CursoBlazor.UI.Components
+<h3>ExpenseTracker</h3>
+
+<TabControl>
+
+    <TabTitle>
+        @if (@context.Text == "Expense")
+        {
+            <span class="oi oi-chevron-bottom" style="margin-right: 10px"></span> @context.Text
+        } else
+        {
+            <span class="oi oi-chevron-top" style="margin-right: 10px"></span> @context.Text
+        }
+        
+    </TabTitle>
+
+    <ChildContent>
+        <TabPage Text="Expense">
+            <h2>Que tranza</h2>
+        </TabPage>
+        <TabPage Text="Income">
+            <h2>Carnal</h2>
+        </TabPage>
+    </ChildContent>
+    
+</TabControl>
+
+@code {
+
+}
