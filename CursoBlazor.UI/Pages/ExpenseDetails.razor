@@ -1,5 +1,60 @@
-﻿<h3>ExpenseDetails</h3>
+﻿@page "/expensedetails"
+@using Models
+@using Interfaces
+@inject ICategoriaService CategoriaService
+
+<EditForm Model="@expense">
+    <table class="table">
+        <tbody>
+            <tr>
+                <td>Cantidad</td>
+                <td><InputNumber @bind-Value="@expense.Cantidad"></InputNumber></td>
+            </tr>
+            <tr>
+                <td>Fecha de transacción</td>
+                <td><InputDate @bind-Value="@expense.FechaTransaccion"></InputDate></td>
+            </tr>
+            <tr>
+                <td>Categoría</td>
+                <td>
+                    <InputSelect @bind-Value="@expense.IdCategoria">
+                        @foreach (var categoria in categorias)
+                        {
+                            <option value="@categoria.Id">@categoria.Name</option>
+                        }
+                    </InputSelect>
+                </td>
+            </tr>
+            <tr>
+                <td>Tipo de gasto</td>
+                <td>
+                    <InputSelect disabled="true" @bind-Value="@expense.TipoGasto">
+                        <option value="@(ExpenseType.Income)">Income</option>
+                        <option value="@(ExpenseType.Expense)">Expense</option>
+                    </InputSelect>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <input type="submit" class="btn btn-success" value="Save"/>
+                    <input type="button" class="btn btn-danger" value="Cancel"/>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</EditForm>
 
 @code {
+    private Expense expense = new Expense();
+    private IEnumerable<Categoria> categorias = new List<Categoria>();
 
+    [Parameter]
+    public ExpenseType ExpenseType { get; set; }
+
+    protected override async Task OnInitializedAsync()
+    {
+        categorias = await CategoriaService.GetCategorias();
+        expense.TipoGasto = ExpenseType;
+        expense.IdCategoria = categorias.FirstOrDefault()!.Id.ToString();
+    }
 }
