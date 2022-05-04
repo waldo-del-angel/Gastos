@@ -4,15 +4,27 @@
 @inject ICategoriaService CategoriaService
 
 <EditForm Model="@expense">
+
+    <DataAnnotationsValidator />
+
     <table class="table">
         <tbody>
             <tr>
                 <td>Cantidad</td>
-                <td><InputNumber @bind-Value="@expense.Cantidad"></InputNumber></td>
+                <td>
+                    <InputNumber @bind-Value="@expense.Cantidad">
+                    </InputNumber>
+                    <ValidationMessage For="@(() => expense.Cantidad )" />
+                </td>
             </tr>
             <tr>
                 <td>Fecha de transacción</td>
-                <td><InputDate @bind-Value="@expense.FechaTransaccion"></InputDate></td>
+                <td>
+                    <InputDate @bind-Value="@expense.FechaTransaccion">
+                    </InputDate>
+
+                    <ValidationMessage For="@(() => expense.FechaTransaccion)" />
+                </td>
             </tr>
             <tr>
                 <td>Categoría</td>
